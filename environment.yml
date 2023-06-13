@@ -1,0 +1,30 @@
+# This is environment for conda environment (replacement of pip environment for cuda installation)
+# which can be created using
+#    conda env create --prefix ./env -f environment.yml 
+# once created it can be used as
+#    conda activate ./env
+name: qlora 
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+  # - defaults
+dependencies:
+  - python=3.10
+  - pytorch=2.0.1
+  - pytorch-cuda=11.8
+  - pip
+  - pip:
+    # (optional) oplatek's debugging tools
+    - wandb
+    - ipdb
+    - exp-notifier
+    # tutorial deps
+    - transformers==4.30.1
+    - sentencepiece==0.1.99
+    - datasets==2.12
+    - evaluate==0.4.0
+    - accelerate==0.20.3
+    - sacremoses
+    - sacrebleu
+    - unbabel-comet
