@@ -6,7 +6,7 @@ Each task consists of a description and a solution which is hidden at the beggin
 
 ## Setting the environment
 
-### Task 1
+### Task 0
 
 You first task is to create a python virtual environment and install `torch`, `transformers`, `sentencepiece`, `datasets`, `evaluate`, `sacremoses`, `sacrebleu`, `unbabel-comet`, `accelerate`.
 
@@ -33,7 +33,7 @@ pip install torch transformers sentencepiece datasets evaluate sacremoses sacreb
 
 ## Models
 
-### Task 2
+### Task 1
 
 Now, create a python script which downloads a model of your choice from the `Helsinki-NLP` family from [here](https://huggingface.co/Helsinki-NLP). Then, use the model and translate an examplary sentence and print its translation on the standard output.
 
@@ -70,6 +70,8 @@ Output:
 
 ## Data
 
+### Task 2
+
 The next step is to download and prepare the data for training. For example, use one of the `wmtXX` datasets and a language pair of your choice. Specifically, download the dataset (load only first 100k training and 1000 validation samples to speed up the process), get familiar with its structure and print first 5 items.
 
 <details>
@@ -79,10 +81,15 @@ The next step is to download and prepare the data for training. For example, use
 from datasets import load_dataset
 
 # Downloading only a subset of training and validattion data for speeding up the process
-raw_datasets = load_dataset("wmt15", "fr-en", split=['train[:100000]', 'validation[:1000]'])
+raw_datasets = load_dataset("wmt", "fr-en", split=['train[:100000]', 'validation[:1000]'])
 
 print(raw_datasets)
-print(raw_datasets["train"][:5])
+
+# Train
+print(raw_datasets[0]["translation"][:5])
+
+# Validation
+print(raw_datasets[1]["translation"][:5])
 ```
 
 Output:
@@ -246,8 +253,7 @@ def tokenize_function(examples):
 
     return model_inputs
 
-raw_datasets = load_dataset("wmt19", "cs-en", split=['train[:100000]', 'validation[:1000]'],
-    cache_dir="/home/javorsky/personal_work_troja/.cache/huggingface/datasets/")
+raw_datasets = load_dataset("wmt19", "cs-en", split=['train[:100000]', 'validation[:1000]'])
 
 tokenized_train = raw_datasets[0].map(tokenize_function, batched=True)
 tokenized_valid = raw_datasets[1].map(tokenize_function, batched=True)
